@@ -78,7 +78,7 @@
                         type === 0 ? this.markerElement[col].push(row) : null;
                         this.deleteElement[col].push(row + 1);
                         this.isEqual(row + 1, col, 1);
-                    } else if ($(firstTr[col]).html() === $(secondTr[col]).html()) {
+                    } else if ($(firstTr[col]).html() == $(secondTr[col]).html()) {
                         type === 0 ? this.markerElement[col].push(row) : null;
                         this.deleteElement[col].push(row + 1);
                         this.isEqual(row + 1, col, 1);
