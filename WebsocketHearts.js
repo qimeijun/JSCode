@@ -13,7 +13,7 @@ export default class IWebSocket {
      * @param {选填} pingTimeout  未收到消息多少秒之后发送ping请求，默认15000
      * @param {选填} pongTimeout 发送ping之后，未收到消息超时时间，默认10000毫秒
      * @param {选填} reconnectTimeout 连接超时的时间
-     * @param {选填} pingMsg  默认检测心跳
+     * @param {选填} pingMsg  检测心跳时，发送的内容
      */
     constructor(url, pingTimeout=15000, pongTimeout=10000,reconnectTimeout=1000*10, repeatLimit=null) {
         this.url = url;
@@ -66,7 +66,7 @@ export default class IWebSocket {
             _this.onclose();
             _this.reconnect();
         };
-
+        // 连接报错就重新连接
         this.ws.onerror = () => {
             _this.onerror();
             _this.reconnect();
@@ -107,7 +107,7 @@ export default class IWebSocket {
     heartStart() {
         // 发送一条消息，查看是否能接受到
         this.pingTimeoutId = setTimeout(() => {
-            this.send({content: "心跳检测"});
+            this.send({content: this.pingMsg});
             this.pongTimeoutId = setTimeout(() => {
                 this.ws.close();
             }, this.pongTimeout);
